@@ -1,2 +1,2 @@
 # Writeup
-Writeup for some previous challenges.
+Writeup for some previous challenges by X1cT34m.
