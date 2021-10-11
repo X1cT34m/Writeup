@@ -631,9 +631,7 @@ for i in tqdm(range(1000)):
             As.append(line)
 ```
 
-但是最后，都只能够得到4组行向量：
-
-![image-20201101234726300](/Users/Soreat_u/Library/Application Support/typora-user-images/image-20201101234726300.png)
+但是最后，都只能够得到4组行向量。
 
 还有一个行向量，死活都整不出来。。。
 
