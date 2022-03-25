@@ -1,6 +1,6 @@
 # X1cT34m-2021 Writeup
 
-![CISCN14scoresssss](https://gitee.com/leonsec/images/raw/master/CISCN14scoresssss.png)
+![CISCN14scoresssss](https://leonsec.gitee.io/images/CISCN14scoresssss.png)
 
 ## Pwn
 
@@ -402,7 +402,7 @@ int main()
 
 爆破rb的值a-z，在q得到flag：
 
-![](https://gitee.com/leonsec/images/raw/master/image-20210515122304432.png)
+![](https://leonsec.gitee.io/images/image-20210515122304432.png)
 
 CISCN{fvsgF-5rRwf-p8KZP-vOndu-SIQoM-}
 
@@ -410,11 +410,11 @@ CISCN{fvsgF-5rRwf-p8KZP-vOndu-SIQoM-}
 
 fuzz：
 
-![image-bansdasdsads](https://gitee.com/leonsec/images/raw/master/image-bansdasdsads.png)
+![image-bansdasdsads](https://leonsec.gitee.io/images/image-bansdasdsads.png)
 
 sqlmap得到表名flag和一个列名id：报错加无列名注入
 
-![](https://gitee.com/leonsec/images/raw/master/image-20210515130056447.png)
+![](https://leonsec.gitee.io/images/image-20210515130056447.png)
 
 一开始用按位比较：
 
@@ -441,7 +441,7 @@ for i in range(1,200):
 
 到最后卡住了，换了无列名注入报错爆列名，然后直接报错注入：
 
-![](https://gitee.com/leonsec/images/raw/master/image-20210515131951311.png)
+![](https://leonsec.gitee.io/images/image-20210515131951311.png)
 
 ```sql
 admin')||extractvalue(1,concat(0x7e,(select * from (select * from flag as a join (select * from flag)b using(id,no))c)))#
@@ -472,7 +472,7 @@ CISCN{JgHhs-jpd52-iJk4O-MGPDz-duFWI-}
 
 在`/etc/acfffacfch/iabhcgedde/facafcfjgf/adeejdbegg/fdceiadhce/fl444444g`发现flag
 
-![](https://gitee.com/leonsec/images/raw/master/image-20210515185821338.png)
+![](https://leonsec.gitee.io/images/image-20210515185821338.png)
 
 exp：
 
@@ -520,7 +520,7 @@ threading.Thread(target=READ,args=()).start()
 threading.Thread(target=READ,args=()).start()
 ```
 
-![](https://gitee.com/leonsec/images/raw/master/image-20210515185737528.png)
+![](https://leonsec.gitee.io/images/image-20210515185737528.png)
 
 CISCN{yo19m-ZqNC1-URusV-u83jg-zxqpZ-}
 

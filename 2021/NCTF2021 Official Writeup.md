@@ -27,11 +27,11 @@
 
 或者可以直接拿[APIKit](https://github.com/API-Security/APIKit)扫到`/user/list`：
 
-![img](https://gitee.com/leonsec/images/raw/master/upload_a13d18c4ac517b61c92633d2ab5491a8.png)
+![img](https://leonsec.gitee.io/images/upload_a13d18c4ac517b61c92633d2ab5491a8.png)
 
 POST访问`/user/list`，返回XML格式的数据
 
-![img](https://gitee.com/leonsec/images/raw/master/upload_457d10608959c02fa6929b93c23c1c83.png)
+![img](https://leonsec.gitee.io/images/upload_457d10608959c02fa6929b93c23c1c83.png)
 
 那么自然而然地想到了XXE；加了waf，不让直接读文件；
 (这里有俩师傅做了非预期,XXE的waf没写好,可以直接盲打外带flag,我在v2限制了靶机出网无法外带了)
@@ -42,17 +42,17 @@ POST访问`/user/list`，返回XML格式的数据
 
 因为是docker代理的端口，我们需要先访问`/actuator/env`获取本地服务端口：
 
-![img](https://gitee.com/leonsec/images/raw/master/upload_e253abf482eb81acd86723e0ac5b0a23.png)
+![img](https://leonsec.gitee.io/images/upload_e253abf482eb81acd86723e0ac5b0a23.png)
 
 然后构造SSRF：
 
-![img](https://gitee.com/leonsec/images/raw/master/upload_2f4cfc5da64ac6be899e89531e7276ae.png)
+![img](https://leonsec.gitee.io/images/upload_2f4cfc5da64ac6be899e89531e7276ae.png)
 
 因为`/jolokia/list`返回的数据太长了，而且里面有一些特殊符号会报`XML document structures must start and end within the same entity.`。
 
 于是后面给了附件pom.xml，可以本地起起来看一下有什么Mbean。
 
-![img](https://gitee.com/leonsec/images/raw/master/upload_91366666810f8650373a58f98968a08d.png)
+![img](https://leonsec.gitee.io/images/upload_91366666810f8650373a58f98968a08d.png)
 
 有一个可以读写文件的Mbean：
 
@@ -60,11 +60,11 @@ com.sun.management:type=DiagnosticCommand
 
 判断远程环境是否存在这个Mbean：
 
-![img](https://gitee.com/leonsec/images/raw/master/upload_756e7a888c7a3632a51520653e215cfd.png)
+![img](https://leonsec.gitee.io/images/upload_756e7a888c7a3632a51520653e215cfd.png)
 
 如果不存在返回的是上图，如果存在返回的是下图两种情况
 
-![img](https://gitee.com/leonsec/images/raw/master/CA25B2D3D6D42FB0C39D25EEB82E1482-8193819.png)
+![img](https://leonsec.gitee.io/images/CA25B2D3D6D42FB0C39D25EEB82E1482-8193819.png)
 
 exp:
 
@@ -117,7 +117,7 @@ nctf{J3va_SecUrlt9_ls_T0o_DlfficuLT}
 
 前面部分先对代码进行审计，我们可以上传zip，然后在解压这里发现
 
-![img](https://gitee.com/leonsec/images/raw/master/upload_d128c8da81c5c852f128bda937c166ab.png)
+![img](https://leonsec.gitee.io/images/upload_d128c8da81c5c852f128bda937c166ab.png)
 
 他没有对压缩包文件内的文件进行检查，这里就可以导致解压目录穿越。这里可以通过一个脚本去生成这样的zip：
 
@@ -201,10 +201,10 @@ prettyjs这题主要的目的是考察选手们如何在服务端不存在`X-Con
 
 而跨域就要面对SOP（Same Origin Policy）的限制。虽然题目的cookie samesite 属性被设置为`none`，使得cookie在我们服务器的域仍然有效，但通过`fetch`，`XMLHttpRequest`等等手段都会受到SOP的限制，请求发出去了，但是response返回后不会让javascript获取到。
 
-![img](https://gitee.com/leonsec/images/raw/master/upload_f8b4d01371c2318759cab77dbf7e369e-20211129203446302.png)
+![img](https://leonsec.gitee.io/images/upload_f8b4d01371c2318759cab77dbf7e369e-20211129203446302.png)
 
 同时服务端还存在一个referer的检查。
-![img](https://gitee.com/leonsec/images/raw/master/upload_ace1a02d8df05699f73f7d15d19a7c0f-20211129203446319.png)
+![img](https://leonsec.gitee.io/images/upload_ace1a02d8df05699f73f7d15d19a7c0f-20211129203446319.png)
 
 此处referer的检查其实也是目前很多主流web服务/中间件在jsonp,视频地址等等接口检查referer的手段：如果存在referer头，判断下是否是从我们自己站过来的。但这样的检查手段绕过也很简单，只需要不带referer即可。
 
@@ -219,7 +219,7 @@ prettyjs这题主要的目的是考察选手们如何在服务端不存在`X-Con
 
 答案是肯定的。只不过此处username被限制了，不能使用`/`。那`//`或`/*`都不能使用。不过我们完全可以用前端下js的另一种注释方式：`<!-- `来注释掉第一行。这样就让整个`/api/template`的内容成为合法js了。
 
-![img](https://gitee.com/leonsec/images/raw/master/upload_5e13c26cbfdaf3526ad7b6d77b9053cb-20211129203446365.png)
+![img](https://leonsec.gitee.io/images/upload_5e13c26cbfdaf3526ad7b6d77b9053cb-20211129203446365.png)
 
 第二个问题，如何让script用post的方式加载内容？这里我的方法是，利用service worker来更改其对`/api/template`的请求。我们知道service worker 相当于浏览器端的代理，自然能将get改为post.那么最后的解法就水落石出了。
 
@@ -360,7 +360,7 @@ exp.html。加载`/api/template`并通过hook的手段拿到ADMIN_USERNAME与COO
 </body>
 ```
 
-![img](https://gitee.com/leonsec/images/raw/master/upload_714b50c7d9cd2dadccbc2a138d077c98-20211129203446436.png)
+![img](https://leonsec.gitee.io/images/upload_714b50c7d9cd2dadccbc2a138d077c98-20211129203446436.png)
 
 利用cookie_secret 以及admin_username 就可以计算出flag所需的cookie了。由于服务端使用的是express的signedCookie,我们可以选择替换配置本地起一个一样的server,或者直接计算hmac-sha256签名,带上cookie访问`/api/flag`即可。
 
@@ -394,14 +394,14 @@ prettynote 的预期解题流程其实已经在给出的第二个hint里了：
 第一步：
 
 json csrf. 这个考点貌似是某厂安全岗面试时经常会问到的一个问题XD。关于它其实stackoverflow上早就有解释了：
-![img](https://gitee.com/leonsec/images/raw/master/upload_53ed5283724e84b98d1191c143ece096-20211129203446431.png)
+![img](https://leonsec.gitee.io/images/upload_53ed5283724e84b98d1191c143ece096-20211129203446431.png)
 
 只有服务端限制了请求`Content-Type`必须是`application/json`之类才能限制此类攻击。
 
 这类csrf攻击的常见场景包括但不限于： php使用`php://input`获取post body
 并使用`json_decode`解析；go直接用json.unMarshal解析req.Body的数据。本题就可以基于后者这样的场景发起的csrf攻击。
 
-![img](https://gitee.com/leonsec/images/raw/master/upload_b66815257431349644fcc1026cd75bba-20211129203446405.png)
+![img](https://leonsec.gitee.io/images/upload_b66815257431349644fcc1026cd75bba-20211129203446405.png)
 
 能够csrf后，我们可以就能让bot增加可控的note内容了。
 
@@ -417,10 +417,10 @@ Content-Security-Policy: default-src https://prettynote.bycsec404.top/; style-sr
 alert(1);`<iframe srcdoc="<script src='https://prettynote.bycsec404.top/note/'></script>">`
 ```
 
-![img](https://gitee.com/leonsec/images/raw/master/upload_bb4e326dcc244b0293b4fc62ba1ab4e6-20211129203446331.png)
+![img](https://leonsec.gitee.io/images/upload_bb4e326dcc244b0293b4fc62ba1ab4e6-20211129203446331.png)
 
 最后也是最重要的考点。我们拿到了store站的xss,而flag在主站的localStorage中，而localStorage 也是受到跨域保护的
-![img](https://gitee.com/leonsec/images/raw/master/upload_2a5c0e33f5dfcdfd82eedcdbf9640411-20211129203446370.png)
+![img](https://leonsec.gitee.io/images/upload_2a5c0e33f5dfcdfd82eedcdbf9640411-20211129203446370.png)
 
 所以我们需要让两个站 same origin。而最后一个hint是 https://developer.mozilla.org/en-US/docs/Web/API/Document/domain ，所以不难想到，我在store站利用xss,设置`document.domain="prettynote.bycsec404.top"`,两者的domain一致不就可以访问了么。
 
@@ -428,10 +428,10 @@ alert(1);`<iframe srcdoc="<script src='https://prettynote.bycsec404.top/note/'><
 
 假如注意到上面文档中的这样的一个语句
 
-![img](https://gitee.com/leonsec/images/raw/master/upload_a9f0eeb36d5f4be213edaa489f279a2f-20211129203446484.png)
+![img](https://leonsec.gitee.io/images/upload_a9f0eeb36d5f4be213edaa489f279a2f-20211129203446484.png)
 
 你可能会顺藤摸瓜，google`document.domain=document.domain`,从而找到MDN 上关于SOP的文档。https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy#changing_origin
-![img](https://gitee.com/leonsec/images/raw/master/upload_21f90e1f0cc08e782d669af028d475ae-20211129203446465.png)
+![img](https://leonsec.gitee.io/images/upload_21f90e1f0cc08e782d669af028d475ae-20211129203446465.png)
 
 所以，我们必须要在主站和从站都设置一遍document.domain才能让他们真正同源
 
@@ -471,7 +471,7 @@ const set = (function assign(b,c,d,a){if(b.includes(a)){return assign(b.substrin
 ```
 
 可以看到每次store站都会反过来向主站postMessage,主站接收到内容后，则会经过set操作，设置userNote 的属性。而这里的set可以做到任意设置window下的属性
-![img](https://gitee.com/leonsec/images/raw/master/upload_97e21367b2c8849ad63829c7f7199e67-20211129203446420.png)
+![img](https://leonsec.gitee.io/images/upload_97e21367b2c8849ad63829c7f7199e67-20211129203446420.png)
 
 所以最后的方法就是，我们用store站的xss反过来向主站postMessage从而设置主站的document.domain,一致后即可访问localStorage,利用跳转bypass CSP 带出flag
 
@@ -540,7 +540,7 @@ exp:
 
 www.zip给出源码
 原本漏洞的影响范围是**5.0.13<=ThinkPHP<=5.0.15**，题目环境给的是thinkPHP5.0.16，因为在5.0.16中官方修复了**insert** 方法注入需要传入的参数判定
-![img](https://gitee.com/leonsec/images/raw/master/upload_e8133f28f9f20093414b73cc30035deb-20211129203446484.png)
+![img](https://leonsec.gitee.io/images/upload_e8133f28f9f20093414b73cc30035deb-20211129203446484.png)
 
 大家查看源码可以发现，在这个case下还有一个’exp’可以利用，但是此字符串被thinkPHP过滤掉了，不能利用。本题删除了对exp的过滤，所以exp可以作为触发点触发sql注入。
 
@@ -584,7 +584,7 @@ http://129.211.173.64:8086/public/index.php/index/M1sakaM1yuu/index
 > 出题的时候特意定义了一个使用驼峰命名法的控制器M1sakaM1yuu，在thinkPHP官方文档中，访问的正确方式应该是index/m1saka_m1yuu/index，中间使用下划线隔开，但是兼容了index/M1sakaM1yuu/index这样的访问方式，这也是在《摆就完事了》中此访问方式能访问到的原因。但是在《摆就完事了2.0》中我加上了官方补丁取消非预期解法，官方补丁不允许路由中存在大写字母，所以会返回404。希望大家以后在开发和代码审计时能注意到这个细节。
 
 这个漏洞很多师傅应该都复现过，复现过程中会将config.php做如下设置：
-![img](https://gitee.com/leonsec/images/raw/master/upload_736aa75cfcf692d8288324e989a5f4f9-20211129203446434.png)
+![img](https://leonsec.gitee.io/images/upload_736aa75cfcf692d8288324e989a5f4f9-20211129203446434.png)
 
 这样能够看到回显，更加直观也方便调试。但是实战环境中这种理想环境极少出现，大部分情况下我们是得不到回显的，所以盲注更加贴合实战，这也是出题时考虑到的因素。
 
@@ -1606,7 +1606,7 @@ sub_401030 函数又对堆中的部分字节做了一定的替换，得到的才
 
 由循环可以轻易知道将输入的字符串每两个字母做一次计算进行比较，每次计算的的代码量为33条指令
 
-![img](https://gitee.com/leonsec/images/raw/master/ueiajO8FYq6skNm.png)
+![img](https://leonsec.gitee.io/images/ueiajO8FYq6skNm.png)
 
 现在可以直接动态调试观察执行了哪些指令，不必去关心 sub_401030 函数中对堆上做了什么数据更改，只需要动态调试观察执行了哪些指令即可,就是做了一个 CRC32 的计算
 
@@ -1629,7 +1629,7 @@ print(flag)
 
 对于每一次指令的执行，除了通过动态调试去观察汇编代码之外，我们也可以通过 trace 功能，跟踪到每一条指令的执行，这里以 ollydbg 的 trace 功能为例`IDA 或者 x32dbg 的 trace功能也可使用`。图中右列部分红色指令的位置即是在堆上执行的指令。trace 之后可以直接阅读汇编代码看到每一次循环中执行了什么代码
 
-![ollydbg图片](https://gitee.com/leonsec/images/raw/master/DrukyMojEVUOhQl.png)
+![ollydbg图片](https://leonsec.gitee.io/images/DrukyMojEVUOhQl.png)
 
 ### 狗狗的秘密
 
@@ -2147,4 +2147,4 @@ fout.close()
 
 [//macOS上可以直接打开.tga格式的图片](https://xn--macos-9h1h74c32ts6yethhwdz93f.xn--tga-vk6eu28axznj8q74h/)
 
-![flag](https://gitee.com/leonsec/images/raw/master/upload_9b05ce8b560442d10192b26b8433a43e.png)
+![flag](https://leonsec.gitee.io/images/upload_9b05ce8b560442d10192b26b8433a43e.png)

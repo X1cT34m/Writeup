@@ -1,6 +1,6 @@
 # ByteCTF2021 Writeup by 欢迎妹子打电话
 
-![bytectf2021](https://gitee.com/leonsec/images/raw/master/bytectf2021.png)
+![bytectf2021](https://leonsec.gitee.io/images/bytectf2021.png)
 
 ## Web
 

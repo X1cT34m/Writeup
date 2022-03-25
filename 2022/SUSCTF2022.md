@@ -1,16 +1,16 @@
 # SUSCTF Writeup by X1cT34m
 
-![image-20220303111732834](https://gitee.com/leonsec/images/raw/master/image-202203031117328_.png)
+![image-20220303111732834](https://leonsec.gitee.io/images/image-202203031117328_.png)
 
-![image-20220303112224332](https://gitee.com/leonsec/images/raw/master/image-20220303112224332_.png)
+![image-20220303112224332](https://leonsec.gitee.io/images/image-20220303112224332_.png)
 
 ## Misc
 
 ### Audio
 题目给了两个音频文件，其中一个是origin音频文件，于是想到flag应该被bgm的声音盖住了，要用origin音频把bgm给去掉。
 把两个文件都拖进Audacity里进行分析,参照`https://www.bilibili.com/video/BV1Es411o78z/`这个教程把bgm给去掉。去掉bgm后听到了滴滴的声音，是摩斯电码！把每一块摩斯电码抠出来，参照电码表译出即可。
-![](https://gitee.com/leonsec/images/raw/master/upload_4ff839e2531a9c8be01ef63e386746cb.png)
-![](https://gitee.com/leonsec/images/raw/master/upload_deac2dc53483c01264d4361f3e3b989a.png)
+![](https://leonsec.gitee.io/images/upload_4ff839e2531a9c8be01ef63e386746cb.png)
+![](https://leonsec.gitee.io/images/upload_deac2dc53483c01264d4361f3e3b989a.png)
 flag为==SUSCTF{MASTEROFAUDIO}==
 
 ### checkin
@@ -31,13 +31,13 @@ flag为==SUSCTF{MASTEROFAUDIO}==
 
 打掉3个Mayan Platform后，会让我们去一个ancient地方找flag，跑遍一下地图，然后找到了一块广告牌
 
-![](https://gitee.com/leonsec/images/raw/master/upload_f521976dccc2d77fe41e766c63243a35.png)
+![](https://leonsec.gitee.io/images/upload_f521976dccc2d77fe41e766c63243a35.png)
 
-![](https://gitee.com/leonsec/images/raw/master/upload_6b01e90594f9947337b5e2541046ad49_.png)
+![](https://leonsec.gitee.io/images/upload_6b01e90594f9947337b5e2541046ad49_.png)
 
-![](https://gitee.com/leonsec/images/raw/master/upload_3f50fb55a8aae8a62689e81d60c4fc5b_.png)
+![](https://leonsec.gitee.io/images/upload_3f50fb55a8aae8a62689e81d60c4fc5b_.png)
 
-![](https://gitee.com/leonsec/images/raw/master/upload_c11538c4c0c143a0ab2453cfa0b77229_.png)
+![](https://leonsec.gitee.io/images/upload_c11538c4c0c143a0ab2453cfa0b77229_.png)
 
 SUSCTF{RED_ALERT_WINNER!!!}
 
